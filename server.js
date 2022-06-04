@@ -1,11 +1,13 @@
-const http = require('http');
+import express from "express";
+import { initHttpMiddleware } from "./middleware/http.js";
+import { connectDB } from "./database.js";
 
-const PORT = 5000;
+const app = express();
+const PORT = 8080;
+const URI = 'mongodb://localhost:27017/fetch-project-training';
 
-http.createServer((req, res) => {
-    res.writeHead(200,{'Content-Type' : 'text/html'});
-    res.write("My Server!!!!");
-    res.end();
-}).listen(PORT, () => {
-    console.log(`Server is running on http://localhost:${PORT}`)
+connectDB();
+initHttpMiddleware(app);
+app.listen(PORT, () => {
+    console.log(`Server is running on http://localhost:${PORT}`);
 });
