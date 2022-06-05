@@ -3,8 +3,13 @@ import { UserModel } from "../models/UserModel.js";
 export const addUser = async (req, res) => {
     try {
         const infoUser = req.body;
-        const checkAvailable = await UserModel.find({email: infoUser.email});
-        if(checkAvailable == null) {
+        let oldUser = await UserModel.findOne({email: infoUser.email});
+        if(oldUser) {
+            await res.json({
+                success: false,
+                message: "Email đã được sử dụng"
+            })
+        }else {
             let user = new UserModel({
                 email: infoUser.email,
                 password: infoUser.password,
@@ -13,9 +18,9 @@ export const addUser = async (req, res) => {
             });
             let saveUser = await user.save();
             console.log(saveUser);
-            res.status(200).json({
+            await res.status(200).json({
                 success: true,
-                message: "Đã thêm người dùng thành công.",
+                message: "Đã thêm người dùng thành công",
                 username: user.nickname
             })
         }
