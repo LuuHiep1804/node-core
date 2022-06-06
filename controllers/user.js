@@ -31,3 +31,32 @@ export const addUser = async (req, res) => {
         res.status(500).send(err);
     }
 }
+
+export const getUser = async (req, res) => {
+    try {
+        if(req.query.nickname) {
+            const queryNickname = req.query.nickname;
+            let user = await UserModel.findOne({nickname : queryNickname});
+            if(user) {
+                user.password = "";
+                await res.status(200).json(user);
+            }else {
+                await res.json({
+                    success: false,
+                    message: "Không tìm thấy nickname"
+                });
+            }
+
+        }else {
+            let users = await UserModel.find();
+            users = users.map((user) => {
+                user.password = "";
+                return user;
+            })
+            res.status(200).json(users);
+        }
+    } catch (err) {
+        console.log('err' + err);
+        res.status(500).send(err);
+    }
+}
