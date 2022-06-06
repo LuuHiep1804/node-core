@@ -60,3 +60,18 @@ export const getUser = async (req, res) => {
         res.status(500).send(err);
     }
 }
+
+export const updateUser = async (req, res) => {
+    try {
+        const userId = req.params.userId;
+        const updateObject = req.body;
+        await UserModel.findByIdAndUpdate({_id: userId}, {$set: updateObject});
+        await res.status(200).json({
+            success: true,
+            message: "Cập nhật thông tin người dùng thành công"
+        });
+    } catch (err) {
+        console.log('err' + err);
+        res.status(500).send(err);
+    }
+}
