@@ -1,4 +1,5 @@
 import { UserModel } from "../models/UserModel.js";
+import bcrypt from "bcrypt";
 
 export const addUser = async (req, res) => {
     try {
@@ -10,9 +11,10 @@ export const addUser = async (req, res) => {
                 message: "Email đã được sử dụng"
             })
         }else {
+            let encryptedPasswood = await bcrypt.hash(infoUser.password, 10);
             let user = new UserModel({
                 email: infoUser.email,
-                password: infoUser.password,
+                password: encryptedPasswood,
                 nickname: infoUser.nickname,
                 phone: infoUser.phone
             });
