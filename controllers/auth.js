@@ -2,11 +2,14 @@ import { generateToken } from "../helpers/auth.js";
 import { UserModel } from "../models/UserModel.js";
 import { TokenModel } from "../models/TokenModel.js";
 import bcrypt from "bcrypt";
+import dotenv from 'dotenv';
 
-const accessTokenSecret = 'dkcmntrata';
-const accessTokenLife = '5m';
-const refreshTokenSecret = 'kickhtoxoi';
-const refreshTokenLife = '10m';
+dotenv.config();
+
+const accessTokenSecret = process.env.ACCESS_TOKEN_SECRET;
+const accessTokenLife = process.env.ACCESS_TOKEN_LIFE;
+const refreshTokenSecret = process.env.REFRESH_TOKEN_SECRET;
+const refreshTokenLife = process.env.REFRESH_TOKEN_LIFE;
 
 export const login = async (req, res) => {
     let token;

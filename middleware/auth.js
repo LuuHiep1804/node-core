@@ -1,7 +1,10 @@
 import jwt from 'jsonwebtoken';
 import { TokenModel } from '../models/TokenModel.js';
+import dotenv from 'dotenv';
 
-let accessTokenSecret = 'dkcmntrata';
+dotenv.config();
+
+let accessTokenSecret = process.env.ACCESS_TOKEN_SECRET;
 
 export const verifyToken = async (req, res, next) => {
     const tokenFromClient  = req.headers["x-access-token"] ||  req.body.token || req.query.token;

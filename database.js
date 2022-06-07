@@ -1,6 +1,9 @@
 import mongoose from "mongoose";
+import dotenv from "dotenv";
 
-const URI = 'mongodb://localhost:27017/fetch-project-training';
+dotenv.config();
+
+const URI = process.env.DATABASE_URL;
 
 export const connectDB = async () => {
     try {
