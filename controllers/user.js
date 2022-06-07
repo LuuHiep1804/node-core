@@ -16,7 +16,8 @@ export const addUser = async (req, res) => {
                 email: infoUser.email,
                 password: encryptedPasswood,
                 nickname: infoUser.nickname,
-                phone: infoUser.phone
+                phone: infoUser.phone,
+                role: infoUser.role
             });
             let saveUser = await user.save();
             console.log(saveUser);
