@@ -8,7 +8,7 @@ const accessTokenLife = '2h';
 const refreshTokenSecret = 'kickhtoxoi';
 const refreshTokenLife = '4h';
 
-export const login = (req, res) => {
+export const login = async (req, res) => {
     let token;
     try {
         const email = req.body.email;
@@ -23,21 +23,29 @@ export const login = (req, res) => {
                 };
                 let accessToken = generateToken(userData, accessTokenSecret, accessTokenLife);
                 let refreshToken = generateToken(userData, refreshTokenSecret, refreshTokenLife);
-                token = new TokenModel(user._id, accessToken, refreshToken);
-                await res.status(200).json({
-                    message: success,
+                token = new TokenModel({
+                    user_id: user._id,
+                    access: accessToken,
+                    refresh: refreshToken
+                })
+                res.status(200).json({
+                    success: true,
                     accessToken: accessToken,
                     refreshToken: refreshToken
                 });
             }else {
-                await res.status(400).json('Sai thông tin đăng nhập');
+                res.status(400).json({
+                    message: "Sai thông tin đăng nhập"
+                });
             }
         }else {
-            await res.status(400).json('Sai thông tin đăng nhập');
+            res.status(400).json({
+                message: "Sai thông tin đăng nhập"
+            });
         }
     } catch (err) {
         console.log('err' + err);
-        await res.status(500).json({
+        res.status(500).json({
             message: "Lỗi hệ thống",
             error: err
         });
