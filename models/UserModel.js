@@ -21,6 +21,10 @@ const userSchema = new mongoose.Schema({
         unique: true,
         required: true,
         trim: true
+    },
+    role: {
+        type: String,
+        required: true
     }
 }, {
     collection: 'user'
