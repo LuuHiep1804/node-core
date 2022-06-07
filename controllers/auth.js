@@ -4,9 +4,9 @@ import { TokenModel } from "../models/TokenModel.js";
 import bcrypt from "bcrypt";
 
 const accessTokenSecret = 'dkcmntrata';
-const accessTokenLife = '2h';
+const accessTokenLife = '5m';
 const refreshTokenSecret = 'kickhtoxoi';
-const refreshTokenLife = '4h';
+const refreshTokenLife = '10m';
 
 export const login = async (req, res) => {
     let token;
@@ -19,7 +19,9 @@ export const login = async (req, res) => {
             if(isMatch) {
                 const userData = {
                     _id: user._id,
-                    nickname: user.nickname
+                    email: user.email,
+                    nickname: user.nickname,
+                    role: user.role
                 };
                 let accessToken = generateToken(userData, accessTokenSecret, accessTokenLife);
                 let refreshToken = generateToken(userData, refreshTokenSecret, refreshTokenLife);
