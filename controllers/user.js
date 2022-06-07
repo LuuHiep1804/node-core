@@ -64,7 +64,13 @@ export const getUser = async (req, res) => {
 export const updateUser = async (req, res) => {
     try {
         const userId = req.params.userId;
-        const updateObject = req.body;
+        let updateObject = req.body;
+        if(updateObject.email) {
+            delete updateObject.email;
+        }
+        if(updateObject.password) {
+            updateObject.password = await bcrypt.hash(updateObject.password, 10);
+        }
         await UserModel.findByIdAndUpdate({_id: userId}, {$set: updateObject});
         await res.status(200).json({
             success: true,
