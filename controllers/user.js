@@ -75,3 +75,17 @@ export const updateUser = async (req, res) => {
         res.status(500).send(err);
     }
 }
+
+export const deleteUser = async (req, res) => {
+    try {
+        const userId = req.params.userId;
+        await UserModel.findByIdAndDelete(userId);
+        await res.status(200).json({
+            success: true,
+            message: "Xóa người dùng thành công"
+        });
+    } catch (err) {
+        console.log('err' + err);
+        res.status(500).send(err);
+    }
+}
