@@ -5,7 +5,7 @@ import { login } from "./controllers/auth.js";
 import user from "./routes/user.js";
 
 const app = express();
-const PORT = 3030;
+const PORT = 5000;
 
 connectDB();
 initHttpMiddleware(app);
