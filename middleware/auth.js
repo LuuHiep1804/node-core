@@ -39,6 +39,9 @@ export const verifyToken = async (req, res, next) => {
 
 export const authRole = (role) => {
     return (req, res, next) => {
+        if(role === 'admin') {
+            next();
+        }
         if(req.user.data.role !== role) {
             res.status(401).json({
                 success: false,
