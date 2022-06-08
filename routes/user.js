@@ -9,7 +9,7 @@ router.post('/register',verifyToken, authRole(ROLE.ADMIN), addUser);
 
 router.get('/', getUser);
 
-router.put('/update-user/:userId', verifyToken, authRole(ROLE.USER), updateUser);
+router.put('/update-user/:userId', verifyToken, updateUser);
 
 router.delete('/delete-user/:userId', verifyToken, authRole(ROLE.ADMIN), deleteUser);
 
